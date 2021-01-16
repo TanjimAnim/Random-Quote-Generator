@@ -10,9 +10,7 @@ import {
   Icon,
   Flex,
   HStack,
-  Heading,
-  Link,
-  color
+  Link
 } from "@chakra-ui/react";
 
 import { FaTwitter, FaQuoteLeft } from "react-icons/fa";
@@ -20,17 +18,20 @@ import quoteArray from "../public/quotes";
 import { defaultColor, getRandomColor } from "../public/color";
 
 const QuoteBox = () => {
-  const [loading, setLoading] = useState(true);
-  const [quote, setQuote] = useState(null);
+  const [opacity, setOpacity] = useState(false);
+
+  const [quote, setQuote] = useState(
+    Math.floor(Math.random() * quoteArray.length)
+  );
   const [color, setColor] = useState(defaultColor);
 
   const onQuoteChange = useCallback(async () => {
     const nextColor = getRandomColor();
-    setLoading(true);
+    setOpacity(false);
     const randomQuote =
       quoteArray[Math.floor(Math.random() * quoteArray.length)];
     setTimeout(() => {
-      setLoading(false);
+      setOpacity(true);
       setColor(nextColor);
       setQuote(randomQuote);
     }, 500);
@@ -56,6 +57,7 @@ const QuoteBox = () => {
       display="flex"
       flexDir="column"
       justifyContent="center"
+      transition="0.8s linear"
     >
       <Box
         width="60%"
@@ -69,17 +71,22 @@ const QuoteBox = () => {
       >
         <Box>
           <Flex>
-            <Box>
+            <Box className={opacity ? "show" : "hide"}>
               <Icon as={FaQuoteLeft} w={7} h={6} color={color} />
               <Text fontSize="2xl" color={color} pl={8} mt="-20px">
-                {loading || !quote ? "..." : quote.quote}
+                {quote.quote}
               </Text>
             </Box>
           </Flex>
         </Box>
         <Box>
-          <Text fontSize="xl" align="right" color={color}>
-            -{loading || !quote ? "..." : quote.author}
+          <Text
+            className={opacity ? "show" : "hide"}
+            fontSize="xl"
+            align="right"
+            color={color}
+          >
+            -{quote.author}
           </Text>
         </Box>
 
@@ -96,7 +103,7 @@ const QuoteBox = () => {
             target="_blank"
             href={randomTweet(quote)}
           >
-            Twitter
+            Tweet now!
           </Button>
         </HStack>
       </Box>
