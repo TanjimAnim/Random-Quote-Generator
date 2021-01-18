@@ -60,7 +60,7 @@ const QuoteBox = () => {
       transition="0.8s linear"
     >
       <Box
-        width="60%"
+        w={[300, 400, 600]}
         border="1px"
         boxShadow="md"
         p={5}
@@ -73,7 +73,7 @@ const QuoteBox = () => {
           <Flex>
             <Box className={opacity ? "show" : "hide"}>
               <Icon as={FaQuoteLeft} w={7} h={6} color={color} />
-              <Text fontSize="2xl" color={color} pl={8} mt="-20px">
+              <Text fontSize={{ base: "lg", md: "xl", lg: "2xl" }} color={color} pl={8} mt="-20px">
                 {quote.quote}
               </Text>
             </Box>
@@ -82,7 +82,7 @@ const QuoteBox = () => {
         <Box>
           <Text
             className={opacity ? "show" : "hide"}
-            fontSize="xl"
+            fontSize={{ base: "md", md: "lg", lg: "xl" }}
             align="right"
             color={color}
           >
